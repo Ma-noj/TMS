@@ -1,136 +1,131 @@
 package com.ty.tms.dao;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.connection.DemoConnectionPool;
-import com.ty.tms.dto.User;
 
+import com.ty.tms.dto.User;
+import com.ty.tms.service.ConnectionPool;
 
 public class UserDao {
-	DemoConnectionPool pool = new DemoConnectionPool();
 
-	User saveUser(User user) {
+	public User saveUser(User user) {
 		try {
-			Class.forName("org.postgresql.Driver");
-			Connection connection = pool.getConnection();
+			Class.forName("org.postresql.Driver");
+			Connection connection = ConnectionPool.getConnectionObject();
 			PreparedStatement preparedStatement = connection.prepareStatement("insert into user1 values(?,?,?,?,?)");
 			preparedStatement.setInt(1, user.getId());
 			preparedStatement.setString(2, user.getName());
 			preparedStatement.setString(3, user.getEmail());
-			preparedStatement.setString(4, user.getRole());
+			preparedStatement.setString(4, user.getPassword());
+			preparedStatement.setString(5, user.getRole());
+
 			preparedStatement.execute();
-			pool.reciveconnection(connection);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+			ConnectionPool.receiveConnectionObject(connection);
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return user;
 	}
 
 	public User findUserById(int id) {
-		ResultSet rs = null;
+		ResultSet resultSet = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			Connection connection = pool.getConnection();
+			Class.forName("org.postresql.Driver");
+			Connection connection = ConnectionPool.getConnectionObject();
 			PreparedStatement preparedStatement = connection.prepareStatement("select * from user1 where id=?");
 			preparedStatement.setInt(1, id);
-			rs = preparedStatement.executeQuery();
-			preparedStatement.close();
-			if (rs.next()) {
-				return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+			resultSet = preparedStatement.executeQuery();
+			ConnectionPool.receiveConnectionObject(connection);
+			if (resultSet.next()) {
+				return new User(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+						resultSet.getString(4), resultSet.getString(5));
 			}
-		pool.reciveconnection(connection);	
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 
 	}
 
-	User updateUser(User user) {
+	public User findUserByEmailPassWord(String email, String password) {
+		ResultSet resultSet = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			Connection connection = pool.getConnection();
+			Class.forName("org.postresql.Driver");
+			Connection connection = ConnectionPool.getConnectionObject();
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("UPDATE user1 SET name=?,email=?,password=? WHERE id=?");
+					.prepareStatement("select * from user1 where email=? and password=?");
+			preparedStatement.setString(1, email);
+			preparedStatement.setString(2, password);
+			resultSet = preparedStatement.executeQuery();
+			ConnectionPool.receiveConnectionObject(connection);
+			if (resultSet.next()) {
+				return new User(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+						resultSet.getString(4), resultSet.getString(5));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	public List<User> fetchAllUser() {
+		ResultSet resultSet = null;
+		List<User> userList = new ArrayList<>();
+		try {
+			Class.forName("org.postresql.Driver");
+			Connection connection = ConnectionPool.getConnectionObject();
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from user1");
+			resultSet = preparedStatement.executeQuery();
+			ConnectionPool.receiveConnectionObject(connection);
+			if (resultSet.next()) {
+				userList.add(new User(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+						resultSet.getString(4), resultSet.getString(5)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return userList;
+
+	}
+
+	public User updateUser(User user) {
+		try {
+			Class.forName("org.postresql.Driver");
+			Connection connection = ConnectionPool.getConnectionObject();
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("update user1 set name=?,email=?,password=? where id=?");
 			preparedStatement.setString(1, user.getName());
 			preparedStatement.setString(2, user.getEmail());
 			preparedStatement.setString(3, user.getPassword());
 			preparedStatement.setInt(4, user.getId());
 			preparedStatement.executeUpdate();
-			pool.reciveconnection(connection);
+			ConnectionPool.receiveConnectionObject(connection);
 			return user;
-           
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 
 	}
-	public List<User> findAllUser() {
-		List<User> al=null;
-		try {
-			Class.forName("org.postgresql.Driver");
-			Connection connection = pool.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement("select * from User");
-			ResultSet rs=preparedStatement.executeQuery();
-			 al= new ArrayList();
-			 while(rs.next()) {
-				 al.add(new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
-			 }
-			 pool.reciveconnection(connection);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return al;
-	}
-	public User findByEmailAndPassword(String email,String password) {
-		ResultSet rs=null;
-		try {
-			Class.forName("org.postgresql.Driver");
-			Connection connection = pool.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement("select * from user1 where email=?and password=?");
-			preparedStatement.setString(1, email);
-			preparedStatement.setString(2, password);
-			
-			if(rs.next()) {
-				return new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
-			}
-			pool.reciveconnection(connection);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+
 	public boolean deleteUser(int id) {
 		try {
-			Class.forName("org.postgresql.Driver");
-			Connection connection = pool.getConnection();
+			Class.forName("org.postresql.Driver");
+			Connection connection = ConnectionPool.getConnectionObject();
 			PreparedStatement preparedStatement = connection.prepareStatement("delete from user1 where id=?");
 			preparedStatement.setInt(1, id);
-			pool.reciveconnection(connection);
+			preparedStatement.executeUpdate();
+			ConnectionPool.receiveConnectionObject(connection);
 			return true;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
-
 }
