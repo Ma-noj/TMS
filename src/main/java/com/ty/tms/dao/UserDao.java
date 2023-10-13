@@ -10,7 +10,8 @@ import com.connection.DemoConnectionPool;
 import com.ty.tms.dto.User;
 
 public class UserDao {
-	String path="org.postgresql.Driver";
+	String path = "org.postgresql.Driver";
+
 	public User saveUser(User user) {
 		try {
 			Class.forName(path);
@@ -81,10 +82,10 @@ public class UserDao {
 			Class.forName(path);
 			Connection connection = DemoConnectionPool.getConnection();
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("select * from user1 where role=employee");
+					.prepareStatement("select * from user1 where role='employee'");
 			resultSet = preparedStatement.executeQuery();
 			DemoConnectionPool.reciveconnection(connection);
-			if (resultSet.next()) {
+			while (resultSet.next()) {
 				userList.add(new User(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
 						resultSet.getString(4), resultSet.getString(5)));
 			}
