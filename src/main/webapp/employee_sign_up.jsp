@@ -15,7 +15,7 @@
 form {
 	border: 2px solid blue;
 	width: 400px;
-	height: 200px;
+	height: 400px;
 	margin: 20px;
 	padding: 30px;
 }
@@ -35,15 +35,25 @@ form {
 </style>
 </head>
 <body>
+
 	<div class="form-block">
-		<form action="login-verification" method="post">
-			<input type="text" name="user_email" id="input-field"
-				placeholder="enter email"> <br> <br> <input
+		<form action="sign_up" method="post">
+			<input type="number" name="user_id" id="input-field"
+				placeholder="enter id"> <br> <br>
+				 <input
+				type="text" name="user_name" id="input-field"
+				placeholder="enter email"> <br> <br> 
+				<input
+				type="text" name="user_email" id="input-field"
+				placeholder="enter email"> <br> <br> 
+				<input
 				type="password" name="user_password" id="input-field"
-				placeholder="enter password"> <br> <br> <input
-				type="submit" value="Login">
+				placeholder="enter password"> <br> <br>
+				 <input
+				type="submit" value="Submit">
 
 		</form>
 	</div>
+
 </body>
 </html>
