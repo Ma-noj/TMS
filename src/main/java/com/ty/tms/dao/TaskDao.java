@@ -15,9 +15,10 @@ import com.ty.tms.service.ConnectionPool;
 
 public class TaskDao {
 	// DemoConnectionPool pool = new DemoConnectionPool();
+	String path="org.postgresql.Driver";
 	public Task saveTask(Task task) {
 		try {
-			Class.forName("org.postgresql.Driver");
+			Class.forName(path);
 			Connection connection = DemoConnectionPool.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement("insert into task values(?,?,?,?,?,?)");
 			preparedStatement.setInt(1, task.getT_id());
@@ -39,7 +40,7 @@ public class TaskDao {
 	public Task findTaskById(int t_id) {
 		ResultSet resultSet = null;
 		try {
-			Class.forName("org.postresql.Driver");
+			Class.forName(path);
 			Connection connection = ConnectionPool.getConnectionObject();
 			PreparedStatement preparedStatement = connection.prepareStatement("select * from task where t_id=?");
 			preparedStatement.setInt(1, t_id);
@@ -60,13 +61,13 @@ public class TaskDao {
 		ResultSet resultSet = null;
 		List<Task> taskList = new ArrayList<Task>();
 		try {
-			Class.forName("org.postresql.Driver");
+			Class.forName(path);
 			Connection connection = ConnectionPool.getConnectionObject();
 			PreparedStatement preparedStatement = connection.prepareStatement("select * from task where user_id=?");
 			preparedStatement.setInt(1, user_id);
 			resultSet = preparedStatement.executeQuery();
 			ConnectionPool.receiveConnectionObject(connection);
-			if (resultSet.next()) {
+			while (resultSet.next()) {
 				taskList.add(new Task(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
 						resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6)));
 			}
@@ -80,9 +81,9 @@ public class TaskDao {
 	// rewrite
 	public Task updateTask(Task task) {
 		try {
-			Class.forName("org.postresql.Driver");
+			Class.forName(path);
 			Connection connection = ConnectionPool.getConnectionObject();
-			PreparedStatement preparedStatement = connection.prepareStatement("update task set status=? where id=? ");
+			PreparedStatement preparedStatement = connection.prepareStatement("update task set status=? where t_id=? ");
 			preparedStatement.setString(1, task.getStatus());
 			preparedStatement.setInt(2, task.getT_id());
 			preparedStatement.executeUpdate();
@@ -96,9 +97,9 @@ public class TaskDao {
 	
 	public boolean deleteTask(int id) {
 		try {
-			Class.forName("org.postresql.Driver");
+			Class.forName(path);
 			Connection connection = ConnectionPool.getConnectionObject();
-			PreparedStatement preparedStatement = connection.prepareStatement("delete from task where id=?");
+			PreparedStatement preparedStatement = connection.prepareStatement("delete from task where t_id=?");
 			preparedStatement.setInt(1, id);
 			preparedStatement.executeUpdate();
 			ConnectionPool.receiveConnectionObject(connection);
@@ -112,12 +113,12 @@ public class TaskDao {
 		ResultSet resultSet = null;
 		List<Task> taskList = new ArrayList<>();
 		try {
-			Class.forName("org.postresql.Driver");
+			Class.forName(path);
 			Connection connection = ConnectionPool.getConnectionObject();
 			PreparedStatement preparedStatement = connection.prepareStatement("select * from task");
 			resultSet = preparedStatement.executeQuery();
 			
-			if (resultSet.next()) {
+			while (resultSet.next()) {
 				taskList.add(new Task(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
 						resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6)));
 			}
