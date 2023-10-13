@@ -13,13 +13,16 @@ public class Task {
 
 	public Task(int t_id, String dicription, String status, String created_date_time, String completed_date_time,
 			int user_id) {
-		super();
 		this.t_id = t_id;
 		this.dicription = dicription;
 		this.status = status;
 		this.created_date_time = created_date_time;
 		this.completed_date_time = completed_date_time;
 		this.user_id = user_id;
+	}
+
+	public Task() {
+		
 	}
 
 	public int getT_id() {

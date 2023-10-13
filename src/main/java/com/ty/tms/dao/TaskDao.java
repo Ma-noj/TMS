@@ -19,12 +19,12 @@ public class TaskDao {
 		try {
 			Class.forName("org.postgresql.Driver");
 			Connection connection = DemoConnectionPool.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement("insert into user1 values(?,?,?,?,?)");
+			PreparedStatement preparedStatement = connection.prepareStatement("insert into task values(?,?,?,?,?,?)");
 			preparedStatement.setInt(1, task.getT_id());
 			preparedStatement.setString(2, task.getDicription());
 			preparedStatement.setString(3, task.getStatus());
 			preparedStatement.setString(4, task.getCompleted_date_time());
-			preparedStatement.setString(4, task.getCreated_date_time());
+			preparedStatement.setString(5, task.getCreated_date_time());
 			preparedStatement.setInt(6, task.getUser_id());
 			preparedStatement.execute();
 			DemoConnectionPool.reciveconnection(connection);
