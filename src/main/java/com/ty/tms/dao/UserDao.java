@@ -9,12 +9,11 @@ import java.util.List;
 import com.connection.DemoConnectionPool;
 import com.ty.tms.dto.User;
 
-
 public class UserDao {
-
+	String path="org.postgresql.Driver";
 	public User saveUser(User user) {
 		try {
-			Class.forName("org.postresql.Driver");
+			Class.forName(path);
 			Connection connection = DemoConnectionPool.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement("insert into user1 values(?,?,?,?,?)");
 			preparedStatement.setInt(1, user.getId());
@@ -35,7 +34,7 @@ public class UserDao {
 	public User findUserById(int id) {
 		ResultSet resultSet = null;
 		try {
-			Class.forName("org.postresql.Driver");
+			Class.forName(path);
 			Connection connection = DemoConnectionPool.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement("select * from user1 where id=?");
 			preparedStatement.setInt(1, id);
@@ -55,15 +54,16 @@ public class UserDao {
 	public User findUserByEmailPassWord(String email, String password) {
 		ResultSet resultSet = null;
 		try {
-			Class.forName("org.postresql.Driver");
+			Class.forName(path);
 			Connection connection = DemoConnectionPool.getConnection();
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("select * from user1 where email=? and password=?");
+					.prepareStatement("select * from user1 where u_email=? and u_password=?");
 			preparedStatement.setString(1, email);
 			preparedStatement.setString(2, password);
 			resultSet = preparedStatement.executeQuery();
 			DemoConnectionPool.reciveconnection(connection);
 			if (resultSet.next()) {
+				System.out.println("Hi");
 				return new User(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
 						resultSet.getString(4), resultSet.getString(5));
 			}
@@ -78,9 +78,10 @@ public class UserDao {
 		ResultSet resultSet = null;
 		List<User> userList = new ArrayList<>();
 		try {
-			Class.forName("org.postresql.Driver");
+			Class.forName(path);
 			Connection connection = DemoConnectionPool.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement("select * from user1");
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("select * from user1 where role=employee");
 			resultSet = preparedStatement.executeQuery();
 			DemoConnectionPool.reciveconnection(connection);
 			if (resultSet.next()) {
@@ -96,7 +97,7 @@ public class UserDao {
 
 	public User updateUser(User user) {
 		try {
-			Class.forName("org.postresql.Driver");
+			Class.forName(path);
 			Connection connection = DemoConnectionPool.getConnection();
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("update user1 set name=?,email=?,password=? where id=?");
@@ -116,7 +117,7 @@ public class UserDao {
 
 	public boolean deleteUser(int id) {
 		try {
-			Class.forName("org.postresql.Driver");
+			Class.forName(path);
 			Connection connection = DemoConnectionPool.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement("delete from user1 where id=?");
 			preparedStatement.setInt(1, id);
