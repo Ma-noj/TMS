@@ -27,29 +27,29 @@ form {
 #input1 {
 	width: 200px;
 	border: 2px solid green;
-	height: 25px;
+	height: 27px;
 	display: flex;
 	align-items: center;
 	margin: 0 auto;
-	border-radius: 15px;
+	border-radius: 8px;
 }
 #input2 {
 	width: 200px;
-	border: 2px solid green;
-	height: 25px;
+	border: 2px solid purple;
+	height: 27px;
 	display: flex;
 	align-items: center;
 	margin: 0 auto;
-	border-radius: 15px;
+	border-radius: 8px;
 }
 #input3 {
 	width: 200px;
-	border: 2px solid green;
-	height: 25px;
+	border: 2px solid white;
+	height: 27px;
 	display: flex;
 	align-items: center;
 	margin: 0 auto;
-	border-radius: 15px;
+	border-radius: 8px;
 }
 #input4 {
 	
@@ -57,7 +57,7 @@ form {
 	margin-left: 90px;
 	width:123px;
 	border: 3px solid green;
-	border-radius: 5px;
+	border-radius: 2px;
 	
 	
 
@@ -67,7 +67,7 @@ form {
 	display: inline-block;
 	width:125px;
 	border: 3px solid red;
-	border-radius: 5px;
+	border-radius: 2px;
 	
 	
 }
