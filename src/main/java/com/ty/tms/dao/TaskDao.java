@@ -128,5 +128,19 @@ public class TaskDao {
 		}
 		return taskList;
 	}
+	public boolean deleteTaskByUserId(int user_id) {
+		try {
+			Class.forName(path);
+			Connection connection = ConnectionPool.getConnectionObject();
+			PreparedStatement preparedStatement = connection.prepareStatement("delete from task where user_id=?");
+			preparedStatement.setInt(1, user_id);
+			preparedStatement.executeUpdate();
+			ConnectionPool.receiveConnectionObject(connection);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 }
