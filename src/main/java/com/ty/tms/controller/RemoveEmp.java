@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ty.tms.dao.UserDao;
+import com.ty.tms.dto.User;
 
 @WebServlet(value = "/remove")
 public class RemoveEmp extends HttpServlet{
@@ -19,6 +20,8 @@ public class RemoveEmp extends HttpServlet{
 		printWriter.print("<h1>hello</h1>");
 		int id=Integer.parseInt(req.getParameter("user_id")) ;     
 		UserDao userDao=new UserDao();
+		User user=userDao.findUserById(id);
+		
 		userDao.deleteUser(id);
 		
 	}

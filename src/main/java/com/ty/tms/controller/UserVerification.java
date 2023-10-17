@@ -21,7 +21,7 @@ public class UserVerification extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PrintWriter printWriter = resp.getWriter();
-//		String userName = req.getParameter("user_name");
+		String userName = req.getParameter("user_name");
 		String userEmail = req.getParameter("user_email");
 		String password = req.getParameter("user_password");
 
