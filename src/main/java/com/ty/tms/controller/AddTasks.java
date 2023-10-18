@@ -1,6 +1,7 @@
 package com.ty.tms.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
@@ -30,6 +31,9 @@ public class AddTasks extends HttpServlet {
 		task.setUser_id(user_id);
 		TaskDao taskDao= new TaskDao();
 		taskDao.saveTask(task);
-		System.out.println("sussfull");
+		PrintWriter printWriter= resp.getWriter();
+		printWriter.print("<html><body background:solid aqua>");
+		printWriter.print("<h1>Task Added successfully</h1>");
+		printWriter.print("</body></html>");
 	}
 }
