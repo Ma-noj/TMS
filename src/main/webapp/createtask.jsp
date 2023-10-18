@@ -10,21 +10,22 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
+	
 }
 
 form {
 	border: 3px solid lightblack;
 	width: 450px;
-	margin: 150px;
+	margin: 150px;s
 	padding: 17px;
-	border-radius: 20px;
-	background-image: linear-gradient(white, pink, black);
+	
+	
 }
 
 #input1 {
-	width: 200px;
+	width: 250px;
 	border: 2px solid lightblack;
-	height: 27px;
+	height: 35px;
 	display: flex;
 	align-items: center;
 	margin: 0 auto;
@@ -38,9 +39,9 @@ form {
 }
 
 #input2 {
-	width: 200px;
+	width: 250px;
 	border: 2px solid lightblack;
-	height: 27px;
+	height: 35px;
 	display: flex;
 	align-items: center;
 	margin: 0 auto;
@@ -48,9 +49,9 @@ form {
 }
 
 #input3 {
-	width: 200px;
+	width: 250px;
 	border: 2px solid lightblack;
-	height: 27px;
+	height: 35px;
 	display: flex;
 	align-items: center;
 	margin: 0 auto;
@@ -60,25 +61,37 @@ form {
 #input4 {
 	display: inline-block;
 	margin-left: 90px;
-	width: 123px;
+	width: 150px;
 	border: 3px solid black;
 	border-radius: 5px;
-	height: 30px;
+	height: 35px;
 	text-shadow: gray;
 	font-weight: bold;
 }
 
 #input5 {
 	display: inline-block;
-	width: 125px;
+	width: 150px;
 	border: 3px solid black;
 	border-radius: 5px;
-	height: 30px;
+	height: 35px;
 	font-weight: bold;
 }
 .container{
-  background: url('https://th.bing.com/th/id/OIP.7txHyDBuHVQ1fFDF9eVMNgHaFj?pid=ImgDet&rs=1');
+  background: url('https://wallpapercave.com/wp/wp3621277.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  
 
+}
+#input4:hover {
+	font-size: 20px;
+	color:green;
+}
+#input5:hover{
+ font-size: 20px;
+	color:red;
 }
 
 
@@ -89,7 +102,7 @@ form {
 	<div id="grad">
 		<div class="dv">
 			<form action="task" method="post" class="form">
-				<h1 style="color: black" align="center">CREATING TASKS</h1>
+				<h1 style="color: white" align="center">CREATING TASKS</h1>
 				<input id="input1" type="id" placeholder="enter task_id" name="t_id"
 					required><br> <input id="input2" type="discription"
 					placeholder="enter discription" name="discription" required><br>
