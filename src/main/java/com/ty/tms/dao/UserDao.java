@@ -120,7 +120,7 @@ public class UserDao {
 		try {
 			Class.forName(path);
 			Connection connection = DemoConnectionPool.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement("delete from user1 where id=?");
+			PreparedStatement preparedStatement = connection.prepareStatement("delete from user1 where u_id=?");
 			preparedStatement.setInt(1, id);
 			preparedStatement.executeUpdate();
 			DemoConnectionPool.reciveconnection(connection);
