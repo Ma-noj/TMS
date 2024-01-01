@@ -26,7 +26,7 @@ public class UserVerification extends HttpServlet {
 		String password = req.getParameter("user_password");
 
 		User user = userDao.findUserByEmailPassWord(userEmail, password);
-		System.out.println(user);
+//		System.out.println(user);
 		if (user != null) {
 			String role = user.getRole();
 			if (role.equalsIgnoreCase("manager")) {
